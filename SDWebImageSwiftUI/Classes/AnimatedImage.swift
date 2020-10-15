@@ -294,6 +294,11 @@ public struct AnimatedImage : PlatformViewRepresentable {
                 placeholderView.bindFrameToSuperviewBounds()
             }
             loadImage(view, context: context)
+        } else if let placeholder = imageConfiguration.placeholder {
+            let options = imageModel.webOptions
+            var context = imageModel.webContext ?? [:]
+            context[.animatedImageClass] = SDAnimatedImage.self
+            view.wrapped.sd_internalSetImage(with: nil, placeholderImage: placeholder, options: options, context: context, setImageBlock: nil, progress: nil, completed: nil)
         }
         
         #if os(macOS)
